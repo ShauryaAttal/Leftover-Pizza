@@ -1,21 +1,24 @@
 
-
-var a = prompt('Enter the first variable: ');
-var b = prompt('Enter the second variable: ');
-function setup(){
-  var b2 = createButton("click here to Swap");
-  b2.mousePressed(swap);
-  }
+function setup() {
+    var r1 = createButton("Red");
+    var g1 = createButton("Green")
+    r1.mousePressed(colorr);
+    g1.mousePressed(colorg);
+}
 
 
 function draw() {
-background(220);
 }
 
-function swap() {
-[a,b] = [b,a];
-console.log('Value of a after swap is:' + a);
-console.log('Value of b after swap is:' + b);
+
+function colorr () {
+console.log (background("red"))
 }
+
+function colorg () {
+console.log (background("green"))
+
+}
+
 
 
