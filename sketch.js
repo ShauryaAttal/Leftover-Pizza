@@ -1,31 +1,43 @@
-var shipMoving;
-var ship;
-var water;
-var seaImage,edges;
+var player;
+var playerMoving; 
+var track;
+var trackImg;
+var boundary1;
+var boundary2;
+var edges;
 
 function preload(){
-shipMoving = loadAnimation("ship-1.png", "ship-2.png", "ship-3.png", "ship-4.png" );
-seaImage = loadImage ("sea.png");
+  //pre-load images
+  playerMoving = loadAnimation("Runner-1.png", "Runner-2.png");
+  trackImg = loadImage("path.png");
 }
 
 function setup(){
-  createCanvas(800,400);
-  water = createSprite(200, 180, 400, 20);
-  water.addImage(seaImage);
-  ship = createSprite (275, 275, 20, 50);
-  ship.addAnimation("moving", shipMoving);
-  edges=createEdgeSprites();
-  ship.scale = 0.3;
-  ship.x = 125;
-
+  createCanvas(400,400);
+  //create sprites here
+  track = createSprite(200,200,800,800);
+  track.addImage(trackImg);
+  edges = createEdgeSprites();
+  boundary1 = createSprite(0, 200, 50, 400);
+  boundary1.visible = false;
+  boundary2 = createSprite(400, 200, 50, 400);
+  boundary2.visible = false;
+  player = createSprite(100,200,20,50);
+  player.addAnimation("running", playerMoving);
+  player.scale = 0.075;
+  player.y = 350
 }
 
 function draw() {
-  background("blue");
- ship.collide(edges[3]);
- water.velocityX = -3;
- if (water.x < 0 ) {
-water.x=water.width/2
- }
- drawSprites();
+  background(0);
+  console.log(player.x);
+  player.x = World.mouseX;
+  player.collide(boundary1);
+  player.collide(boundary2);
+  track.velocityY = 3;
+  if (track.y > 400) {
+    track.y = track.height/3;
+  }
+  player.collide(edges[3]);
+  drawSprites();
 }
