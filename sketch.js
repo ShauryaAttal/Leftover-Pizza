@@ -1,43 +1,68 @@
-var player;
-var playerMoving; 
-var track;
-var trackImg;
-var boundary1;
-var boundary2;
-var edges;
+var garden,rabbit;
+var gardenImg,rabbitImg;
+var apple;
+var appleImg;
+var leaf;
+var leafImg;
 
 function preload(){
-  //pre-load images
-  playerMoving = loadAnimation("Runner-1.png", "Runner-2.png");
-  trackImg = loadImage("path.png");
+  gardenImg = loadImage("garden.png");
+  rabbitImg = loadImage("rabbit.png");
+  appleImg = loadImage("apple.png");
+  leafImg = loadImage("orangeLeaf.png");
 }
 
 function setup(){
+  
   createCanvas(400,400);
-  //create sprites here
-  track = createSprite(200,200,800,800);
-  track.addImage(trackImg);
-  edges = createEdgeSprites();
-  boundary1 = createSprite(0, 200, 50, 400);
-  boundary1.visible = false;
-  boundary2 = createSprite(400, 200, 50, 400);
-  boundary2.visible = false;
-  player = createSprite(100,200,20,50);
-  player.addAnimation("running", playerMoving);
-  player.scale = 0.075;
-  player.y = 350
+  
+// Moving background
+garden=createSprite(200,200);
+garden.addImage(gardenImg);
+
+//creating boy running
+rabbit = createSprite(180,340,30,30);
+rabbit.scale =0.09;
+rabbit.addImage(rabbitImg);
 }
+
 
 function draw() {
   background(0);
-  console.log(player.x);
-  player.x = World.mouseX;
-  player.collide(boundary1);
-  player.collide(boundary2);
-  track.velocityY = 3;
-  if (track.y > 400) {
-    track.y = track.height/3;
+  edges= createEdgeSprites();
+  rabbit.collide(edges);
+  rabbit.x = World.mouseX;
+  var rand = Math.round(random(1,3));
+  console.log(rand);
+  if (frameCount % 80 == 0) {
+   if (rand == 1) {
+      createApples();
+   }
+  else {
+    createLeaves();
   }
-  player.collide(edges[3]);
-  drawSprites();
+}
+
+
+
+
+drawSprites();
+}
+
+function createApples() {
+  apple = createSprite (Math.round(random(50,350),40,10,10));
+  apple.addImage(appleImg);
+  apple.velocityY = 3;
+  apple.scale = 0.075;
+  apple.depth = rabbit.depth;
+  rabbit.depth = rabbit.depth + 1;
+}
+
+function createLeaves() {
+  leaf = createSprite (Math.round(random(50,350),40,10,10));
+  leaf.addImage(leafImg);
+  leaf.velocityY = 3;
+  leaf.scale = 0.075;
+  leaf.depth = rabbit.depth;
+  rabbit.depth = rabbit.depth + 1;
 }
